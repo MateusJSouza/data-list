@@ -39,7 +39,7 @@ export function Pagination({ pages, items, page }: PaginationProps) {
   }
 
   function nextPage() {
-    if (page + 1 >= pages) {
+    if (page + 1 > pages) {
       return
     }
 
