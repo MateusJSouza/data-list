@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Dialog from '@radix-ui/react-dialog'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Check, Loader2, X } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -22,6 +23,8 @@ function getSlugFromString(input: string): string {
 }
 
 export function CreateTagForm() {
+  const queryClient = useQueryClient()
+
   const { register, handleSubmit, watch, formState } = useForm<CreateTagSchema>(
     {
       resolver: zodResolver(createTagSchema),
@@ -30,15 +33,26 @@ export function CreateTagForm() {
 
   const slug = watch('title') ? getSlugFromString(watch('title')) : ''
 
+  const { mutateAsync } = useMutation({
+    mutationFn: async ({ title }: CreateTagSchema) => {
+      await fetch('http://localhost:3333/tags', {
+        method: 'POST',
+        body: JSON.stringify({
+          title,
+          slug,
+          amountOfVideos: 0,
+        }),
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['get-tags'],
+      })
+    },
+  })
+
   async function createTag({ title }: CreateTagSchema) {
-    await fetch('http://localhost:3333/tags', {
-      method: 'POST',
-      body: JSON.stringify({
-        title,
-        slug,
-        amountOfVideos: 0,
-      }),
-    })
+    await mutateAsync({ title })
   }
 
   return (

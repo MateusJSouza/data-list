@@ -1211,6 +1211,24 @@
       "title": "Tag do Mateus",
       "slug": "tag-do-mateus",
       "amountOfVideos": 0
+    },
+    {
+      "id": "e1f8",
+      "title": "Nova tag",
+      "slug": "nova-tag",
+      "amountOfVideos": 0
+    },
+    {
+      "id": "2384",
+      "title": "teste com mutation",
+      "slug": "teste-com-mutation",
+      "amountOfVideos": 0
+    },
+    {
+      "id": "9f1e",
+      "title": "tag nova do mateus",
+      "slug": "tag-nova-do-mateus",
+      "amountOfVideos": 0
     }
   ]
 }
